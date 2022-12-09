@@ -1,0 +1,6 @@
+sources:
+  - name: Courier
+    handler:
+      graphql:
+        endpoint: http://localhost:7000/graphql
+
