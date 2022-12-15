@@ -1,23 +1,19 @@
-schema {
-  query: Query
-  mutation: Mutation
-});
+const { buildSchema, Source } = require('graphql');
+const source = new Source(/* GraphQL */`
 
-type Query{
-  # Fetch All Couriers
-  findAllCouriers: [Courier]
-  findOneCourier(id: ID): [Courier]
-  findAvailableCouriers(available: Boolean): [Courier]
-  findAllCustomerOrders: [CustomerOrderResponse]
-  findOneCustomerOrder(id: Int): CustomerOrderResponse
+schema {
+    query: Query,
+    mutation: Mutation,
+}
+
+type Query {
+    findAllCustomerOrders: [CustomerOrderResponse]
+    findOneCustomerOrder(id: Int): CustomerOrderResponse
 }
 
 type Mutation {
-#    # Update the courier status
-  addCourier(firstName: String, lastName: String, email: String, password: String, available: Boolean): Courier
-  update(id: ID, firstName: String, lastName: String, email: String, password: String, available: Boolean): Courier
-  delete(id: ID): Courier
-  addCustomerOrder(
+    # Add a new customer order to the database.
+    addCustomerOrder(
         order_start : String
         order_end : String
         total_price : Float
@@ -49,14 +45,6 @@ type Mutation {
     deleteCustomerOrder(id: ID) : CustomerOrderResponse
 }
 
-type Courier {
-  courierId: ID!
-  firstName: String!
-  lastName: String!
-  email: String!
-  password: String!
-  available: Boolean!
-}
 
 # This is the entire customer order entity.
 type CustomerOrderResponse {
@@ -78,3 +66,9 @@ type CustomerOrderItemsResponse {
     customer_order_id: Int
     item_id: Int
 }
+`, `.mesh/sources/courier_gateway/schema.graphql`);
+
+module.exports = buildSchema(source, {
+  assumeValid: true,
+  assumeValidSDL: true
+});

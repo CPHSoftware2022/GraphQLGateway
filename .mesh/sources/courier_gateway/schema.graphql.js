@@ -30,7 +30,7 @@ type Courier {
   available: Boolean!
 }
 
-`, `.mesh/sources/courier_gateway/schema.graphql`);
+`, `.mesh/sources/order_gateway/schema.graphql`);
 
 module.exports = buildSchema(source, {
   assumeValid: true,

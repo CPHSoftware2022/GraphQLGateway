@@ -3,4 +3,8 @@ sources:
     handler:
       graphql:
         endpoint: http://localhost:7000/graphql
+  - name: Order
+    handler:
+      graphql:
+        endpoint: http://localhost:7001/graphql
 
